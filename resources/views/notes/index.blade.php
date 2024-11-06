@@ -1,43 +1,49 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>All Notes</title>
+</head>
+<body>
+    
+    <h1>All Notes</h1>
 
-@section('title', 'Notes')
+    <a href="{{ route('notes.create') }}">Create new note</a>
 
-@section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Notes</h1>
-        <a href="{{ route('notes.create') }}" class="btn btn-primary">Create New Note</a>
-    </div>
-
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <table class="table table-striped">
+    <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Actions</th>
+               <th>ID</th> 
+               <th>Title</th> 
+               <th>Content</th>
+               <th>Actions</th>
+               <th>Delete</th>
             </tr>
         </thead>
+
         <tbody>
             @foreach ($notes as $note)
                 <tr>
                     <td>{{ $note->id }}</td>
                     <td>{{ $note->title }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($note->content, 50) }}</td> <!-- Limita la vista del contenido a 50 caracteres -->
                     <td>
-                        <a href="{{ route('notes.show', $note->id) }}" class="btn btn-info btn-sm">View</a>
-                        <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline;">
+                        <a href="{{ route('notes.show', $note->id) }}">See note</a>
+                        <a href="{{ route('notes.edit', $note->id) }}">Edit note</a>
+                    </td>
+                    <td>
+                        <form action="{{ route('notes.destroy', $note->id) }}" method="post">
                             @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            @method('delete')
+
+                            <input type="submit" value="Delete note">
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-@endsection
+</body>
+</html>
