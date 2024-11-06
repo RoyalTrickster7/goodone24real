@@ -37,7 +37,7 @@ class CategoryController extends Controller
         Category::create([
             'name'      =>  $request->name,
             'color'     =>  str_replace('#', '', $request->color),
-            'user_id'   =>  1
+            'user_id'   =>  Auth::id(), // Asigna el ID del usuario autenticado
         ]);
 
         return to_route('categories.index');
@@ -48,7 +48,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id); // Usamos findOrFail para lanzar una excepción si no encuentra el registro
         $user = User::find($category->user_id);
         return view('categories.show', compact('category', 'user'));
     }
@@ -58,7 +58,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id); // Usamos findOrFail para mayor seguridad
         return view('categories.edit', compact('category'));
     }
 
@@ -67,7 +67,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id); // Usamos findOrFail para lanzar una excepción si no encuentra el registro
 
         $category->update([
             'name'      =>  $request->name,
@@ -82,7 +82,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id); // Usamos findOrFail para mayor seguridad
         $category->delete();
         return to_route('categories.index');
     }
