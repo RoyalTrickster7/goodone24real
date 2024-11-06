@@ -1,47 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>All Categories</h1>
+@extends('layouts.app')
 
-    <a href="{{ route('categories.create') }}">Create new category</a>
+@section('title', 'Categories')
 
-    <table>
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Categories</h1>
+        <a href="{{ route('categories.create') }}" class="btn btn-primary">Create New Category</a>
+    </div>
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <table class="table table-striped">
         <thead>
             <tr>
-               <th>ID</th> 
-               <th>Name</th> 
-               <th>Actions</th>
-               <th>Delete</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Actions</th>
             </tr>
         </thead>
-
         <tbody>
             @foreach ($categories as $category)
                 <tr>
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
+                    <td><span style="background-color: #{{ $category->color }};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                     <td>
-                        <a href="{{ route('categories.show', $category->id) }}">See category</a>
-                        <a href="{{ route('categories.edit', $category->id) }}">Edit category</a>
-                    </td>
-                    <td>
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display: inline;">
                             @csrf
-                            @method('delete')
-
-                            <input type="submit" value="Delete category">
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+@endsection
