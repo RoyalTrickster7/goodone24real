@@ -4,44 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Folders</title>
+    <title>Folders</title>
 </head>
 <body>
-    
-    <h1>All Folders</h1>
 
-    <a href="{{ route('folders.create') }}">Create new folder</a>
+    <h1>Folders</h1>
+
+    <a href="{{ route('folders.create') }}" class="btn btn-primary">Create New Folder</a>
+    
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <table>
         <thead>
             <tr>
-               <th>ID</th> 
-               <th>Name</th> 
-               <th>Actions</th>
-               <th>Delete</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
             </tr>
         </thead>
-
         <tbody>
             @foreach ($folders as $folder)
                 <tr>
                     <td>{{ $folder->id }}</td>
                     <td>{{ $folder->name }}</td>
                     <td>
-                        <a href="{{ route('folders.show', $folder->id) }}">See folder</a>
-                        <a href="{{ route('folders.edit', $folder->id) }}">Edit folder</a>
-                    </td>
-                    <td>
-                        <form action="{{ route('folders.destroy', $folder->id) }}" method="post">
+                        <a href="{{ route('folders.show', $folder->id) }}">View</a>
+                        <a href="{{ route('folders.edit', $folder->id) }}">Edit</a>
+                        <form action="{{ route('folders.destroy', $folder->id) }}" method="POST" style="display: inline;">
                             @csrf
-                            @method('delete')
-
-                            <input type="submit" value="Delete folder">
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
 </body>
 </html>
