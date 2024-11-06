@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\API\NoteControllerAPI;
 use App\Http\Controllers\FolderController;
+use App\Http\Controllers\API\FolderControllerAPI;
 use App\Http\Controllers\DataController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +43,13 @@ Route::get('/retrieve-data', [DataController::class, 'retrieveData']);
 
 // Archivo de autenticación (login, registro, etc.)
 require __DIR__.'/auth.php';
+
+// API
+Route::get('/api/folders', [FolderControllerAPI::class, 'index']);
+Route::get('/api/folders/{id}', [FolderControllerAPI::class, 'show']);
+
+Route::get('/api/notes', [NoteControllerAPI::class, 'index']);
+Route::get('/api/notes/{id}', [NoteControllerAPI::class, 'show']);
 
 /*
 
