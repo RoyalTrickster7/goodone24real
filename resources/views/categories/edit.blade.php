@@ -1,28 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>Update Category: {{ $category->name }}</h1>
+@extends('layouts.app')
 
-    <!-- Name, Color, User ID -->
+@section('title', 'Edit Category')
 
-    <form action="{{ route('categories.update', $category->id) }}" method="post">
+@section('content')
+    <h1>Edit Category</h1>
+
+    <form action="{{ route('categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-        
-        <label for="">Name</label>
-        <input type="text" name="name" value="{{ $category->name }}">
-        <br> <br>
-        <label for="">Color</label>
-        <input type="color" name="color" value="#{{ $category->color }}">
-        <br> <br>
-        <input type="submit" value="Update category">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ $category->name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="color" class="form-label">Color</label>
+            <input type="color" id="color" name="color" class="form-control" value="#{{ $category->color }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Update Category</button>
+        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Back</a>
     </form>
-</body>
-</html>
+@endsection

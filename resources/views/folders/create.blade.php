@@ -1,34 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Folder</title>
-</head>
-<body>
+@extends('layouts.app')
 
+@section('title', 'Create Folder')
+
+@section('content')
     <h1>Create New Folder</h1>
 
     <form action="{{ route('folders.store') }}" method="POST">
         @csrf
-        
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
 
-        <label for="categories_id">Category:</label>
-        <select name="categories_id" id="categories_id" required>
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @endforeach
-        </select>
-        <br><br>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
 
-        <button type="submit">Create Folder</button>
+        <div class="mb-3">
+            <label for="categories_id" class="form-label">Category</label>
+            <select name="categories_id" id="categories_id" class="form-select" required>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Folder</button>
+        <a href="{{ route('folders.index') }}" class="btn btn-secondary">Back</a>
     </form>
-
-    <a href="{{ route('folders.index') }}">Back to Folders</a>
-
-</body>
-</html>
+@endsection

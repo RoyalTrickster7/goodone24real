@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>{{ $category->name }}</h1>
+@extends('layouts.app')
 
-    <p>Color: #{{ $category->color }}</p>
+@section('title', 'View Category')
 
-    <p>User: {{ $user->name }}</p>
+@section('content')
+    <h1>Category Details</h1>
 
-</body>
-</html>
+    <div class="mb-3">
+        <p><strong>ID:</strong> {{ $category->id }}</p>
+        <p><strong>Name:</strong> {{ $category->name }}</p>
+        <p><strong>Color:</strong> <span style="background-color: #{{ $category->color }};">&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+    </div>
+
+    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
+    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <a href="{{ route('categories.index') }}" class="btn btn-secondary">Back</a>
+@endsection

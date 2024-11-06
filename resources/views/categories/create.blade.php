@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Category</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Create Category</h1>
+@section('title', 'Create Category')
 
-    <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+@section('content')
+    <h1>Create New Category</h1>
+
+    <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
 
-        <label for="color">Color:</label>
-        <input type="color" id="color" name="color" required>
-        <br><br>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
 
-        <label for="file">Image File (optional):</label>
-        <input type="file" id="file" name="file">
-        <br><br>
+        <div class="mb-3">
+            <label for="color" class="form-label">Color</label>
+            <input type="color" id="color" name="color" class="form-control" required>
+        </div>
 
-        <button type="submit">Create Category</button>
+        <button type="submit" class="btn btn-primary">Create Category</button>
+        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Back</a>
     </form>
-
-</body>
-</html>
+@endsection
